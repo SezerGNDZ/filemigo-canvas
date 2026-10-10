@@ -1,3 +1,8 @@
+# 0.2.2
+
+- Repository now owned by latecafe-tech (Late Cafe Games); original SezerGNDZ authorship retained.
+- Updated installation URLs and browser connection guidance.
+
 # 0.2.1
 
 - Optional local window relay for public-to-loopback browser restrictions.

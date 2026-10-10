@@ -13,7 +13,7 @@
 - Atomic edits and semantic comparisons: IDs, text, directions, relationship markers, multiplicities and sequence scopes.
 - 15 local MCP tools over stdio, including live browser editing. No paid API, model call, telemetry or automatic file access.
 
-Version **0.2.1** is an early developer release. This is a headless diagram toolkit, not a packaged drag-and-drop editor. Use the website for interactive editing. The optional live bridge edits one explicitly paired browser canvas. It does not read `.drawio` files.
+Version **0.2.2** is an early developer release. This is a headless diagram toolkit, not a packaged drag-and-drop editor. Use the website for interactive editing. The optional live bridge edits one explicitly paired browser canvas. It does not read `.drawio` files.
 
 A **Late Cafe Games** project. Original author and contributor: [SezerGNDZ](https://github.com/SezerGNDZ).
 
@@ -22,7 +22,7 @@ A **Late Cafe Games** project. Original author and contributor: [SezerGNDZ](http
 Requires **Node.js 22+** and npm. Download **Code → Download ZIP** and extract it, or:
 
 ```sh
-git clone https://github.com/SezerGNDZ/filemigo-canvas.git
+git clone https://github.com/latecafe-tech/filemigo-canvas.git
 cd filemigo-canvas
 npm ci --ignore-scripts
 npm test

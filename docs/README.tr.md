@@ -1,13 +1,13 @@
 # Filemigo Canvas — Türkçe
 
-54 vektörel şekil, 16 diyagram şablonu, JavaScript diyagram kütüphanesi ve 15 araçlı yerel MCP sunucusu. Sürüm: **0.2.1**.
+54 vektörel şekil, 16 diyagram şablonu, JavaScript diyagram kütüphanesi ve 15 araçlı yerel MCP sunucusu. Sürüm: **0.2.2**.
 
 ## Kurulum
 
 Node.js 22 veya üstünü kur. GitHub'da **Code → Download ZIP** ile indirip klasöre çıkar veya:
 
 ```sh
-git clone https://github.com/SezerGNDZ/filemigo-canvas.git
+git clone https://github.com/latecafe-tech/filemigo-canvas.git
 cd filemigo-canvas
 npm ci --ignore-scripts
 npm test
