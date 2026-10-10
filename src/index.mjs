@@ -7,7 +7,7 @@ import {studioTemplates} from './core/studio-data.mjs';
 import {canvasTemplate} from './core/canvas-templates.mjs';
 import {routePlan,refreshRoutes} from './core/canvas-geometry.mjs';
 
-export const version='0.2.0';
+export const version='0.2.1';
 export {systemPrompt,exampleDiagram};
 const clone=v=>structuredClone(v);
 function parse(input){

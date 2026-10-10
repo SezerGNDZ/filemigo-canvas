@@ -13,7 +13,7 @@
 - Atomic edits and semantic comparisons: IDs, text, directions, relationship markers, multiplicities and sequence scopes.
 - 15 local MCP tools over stdio, including live browser editing. No paid API, model call, telemetry or automatic file access.
 
-Version **0.2.0** is an early developer release. This is a headless diagram toolkit, not a packaged drag-and-drop editor. Use the website for interactive editing. The optional live bridge edits one explicitly paired browser canvas. It does not read `.drawio` files.
+Version **0.2.1** is an early developer release. This is a headless diagram toolkit, not a packaged drag-and-drop editor. Use the website for interactive editing. The optional live bridge edits one explicitly paired browser canvas. It does not read `.drawio` files.
 
 A **Late Cafe Games** project. Original author and contributor: [SezerGNDZ](https://github.com/SezerGNDZ).
 
@@ -55,12 +55,17 @@ Workflow: `filemigo_instructions` → `filemigo_list_shapes` or `filemigo_get_te
 
 ## Live browser editing
 
+**Supported browser assistants:** Filemigo also offers WebMCP directly in the open page. Click **Connect browser assistant** in Live MCP when available. Three page tools read, patch and arrange the canvas through the same revision/undo guards. No local server installation is needed for that mode. Enablement is per page and can be revoked.
+
+**Other local MCP clients:** use this downloadable server:
+
+
 1. Configure the local MCP server above, then ask the assistant to call `filemigo_live_start`.
 2. Open [Filemigo Canvas](https://filemigo.com/canvas/), expand **Live MCP**, and paste the returned pairing code. Connecting shares this canvas with the AI client and permits live edits. Keep the code private; never place it in a URL.
 3. Ask the assistant to call `filemigo_live_read`, then `filemigo_live_update` with that exact `expectedRevision`, or `filemigo_live_arrange`. Every accepted operation is one undo step. Use native node/edge fields from `create_diagram` when adding new objects.
 4. Pause edits or disconnect from the canvas at any time. `filemigo_live_stop` also closes the local listener.
 
-The bridge listens only on `127.0.0.1` on a random port, uses a random session token, and checks both Host and Origin. No hosted relay or subscription is required. Chrome/Edge may ask for loopback/local-network permission; other browsers or embedded webviews may block it. Do not disable browser security. The live canvas needs to stay visible. A remote/cloud-only MCP client cannot access your computer's bridge.
+The bridge listens only on `127.0.0.1` on a random port, uses a random session token, and checks both Host and Origin. No hosted relay or subscription is required. The canvas opens a local connection window when supported. Keep it open and return to the canvas. It validates message source and origin and keeps pairing codes out of URLs. When popups are blocked, direct connection may require loopback/local-network permission. Embedded browsers can block direct loopback access; use their native WebMCP mode when available. Do not disable browser security. The live canvas needs to stay visible. A remote/cloud-only MCP client cannot access your computer's bridge.
 
 AI changes use compare-and-swap revisions, validate the complete graph and wait for browser acknowledgement. If you edit during an AI calculation, the stale result is rejected. The client must reread after conflicts/timeouts; a lost acknowledgement can mean an operation already applied. Edits to text/relations require `allowSemanticChanges: true` for a user-requested change; ordinary layout/style changes cannot silently change meaning. This is structural protection, not proof of the intended business logic. The browser keeps a short activity log and its existing recovery draft.
 

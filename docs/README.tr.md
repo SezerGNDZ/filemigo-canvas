@@ -1,6 +1,6 @@
 # Filemigo Canvas — Türkçe
 
-54 vektörel şekil, 16 diyagram şablonu, JavaScript diyagram kütüphanesi ve 15 araçlı yerel MCP sunucusu. Sürüm: **0.2.0**.
+54 vektörel şekil, 16 diyagram şablonu, JavaScript diyagram kütüphanesi ve 15 araçlı yerel MCP sunucusu. Sürüm: **0.2.1**.
 
 ## Kurulum
 
@@ -30,3 +30,5 @@ AI önce `filemigo_live_read` ile sürümü okur; `filemigo_live_update` veya `f
 Yerel Node/stdio MCP istemcisi gerekir; yalnızca bulut üzerinden çalışan istemciler bilgisayarındaki köprüye ulaşamaz. Tarayıcı yerel bağlantı izni isteyebilir. Güvenlik ayarlarını kapatma; izin verilmezse dosya aktarımıyla çalışmaya devam edebilirsin. Tuval görünür olmalıdır; arka plan sekmelerinde AI düzenlemesi durur. Bağlantı gecikmesinde başarı varsayılmaz; AI önce güncel tuvali yeniden okumalıdır.
 
 Bir **Late Cafe Games** projesi. Orijinal geliştirici ve katkıcı: **SezerGNDZ**.
+
+WebMCP destekleyen tarayıcılarda **Tarayıcı asistanını bağla** ile kurulum olmadan canlı çalışabilirsin. Diğer istemcilerde yerel bağlantı penceresi açılırsa açık tutup tuvale dön. Pencere engellenirse doğrudan bağlantı için tarayıcı yerel erişim izni isteyebilir.

@@ -4,6 +4,7 @@ import {createLiveBridge} from '../src/live-bridge.mjs';
 import {createRevisionGuard} from '../src/live-client.mjs';
 import * as api from '../src/index.mjs';
 import {request as httpRequest} from 'node:http';
+import {Script} from 'node:vm';
 
 async function fixture(t,options={}){
  const bridge=await createLiveBridge({execute:async(method,args)=>api[method](...args),...options});t.after(()=>bridge.close());
@@ -63,4 +64,12 @@ test('revision changed while worker calculates rejects the completed result',asy
  const {bridge,state,request}=await fixture(t,{execute:async(method,args)=>{await calculated;return api[method](...args);}});
  const pending=bridge.change({expectedRevision:0,method:'updateDiagram',argument:{nodes:[{id:'n1',x:900}]}});const rejected=assert.rejects(pending,/changed during calculation/);
  state.project.title='Human edit';state.revision++;await request('/sync');finish();await rejected;assert.equal(bridge.read().project.title,'Human edit');
+});
+test('local relay serves no credentials and still authenticates local-origin operations',async t=>{
+ const {bridge,port,request,state}=await fixture(t);const origin=`http://127.0.0.1:${port}`;
+ const response=await fetch(origin+'/bridge');assert.equal(response.status,200);assert.match(response.headers.get('content-security-policy'),/frame-ancestors 'none'/);
+ const html=await response.text(),script=await (await fetch(origin+'/relay.js')).text();assert.doesNotThrow(()=>new Script(script));
+ assert.ok(!html.includes(bridge.connection().pairingCode));assert.ok(!script.includes(bridge.connection().pairingCode));
+ assert.equal((await request('/sync',state,{Origin:origin,Authorization:'Bearer invalid'})).status,401);
+ await request('/disconnect');assert.equal((await request('/connect',state,{Origin:origin})).status,200);
 });

@@ -1,3 +1,9 @@
+# 0.2.1
+
+- Optional local window relay for public-to-loopback browser restrictions.
+- Filemigo website adds explicitly enabled WebMCP tools for supported browser assistants, without a local installation.
+- Structured browser-tool failures and authenticated relay regression tests.
+
 # 0.2.0
 
 - Authenticated local live bridge and five MCP tools for a paired browser canvas.

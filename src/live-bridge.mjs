@@ -1,6 +1,7 @@
 import {createServer} from 'node:http';
 import {randomBytes,randomUUID,timingSafeEqual} from 'node:crypto';
 import {validateCanvas} from './core/canvas-core.mjs';
+import {relayHtml,relayScript,relayCss} from './live-relay.mjs';
 
 const origins=new Set(['https://filemigo.com','https://www.filemigo.com','https://filemigo.sezergndz.chatgpt.site','http://localhost:4173','http://127.0.0.1:4173']);
 const fail=message=>{throw Error(message);};
@@ -11,8 +12,14 @@ export async function createLiveBridge({execute,timeoutMs=15000}={}){
  const snapshot=()=>{const s=fresh();return {clientId:s.clientId,revision:s.revision,project:structuredClone(s.project),busy:s.busy,paused:s.paused};};
  const server=createServer(async(req,res)=>{
   res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');
-  const origin=req.headers.origin;
-  if(req.headers.host!==`127.0.0.1:${server.address()?.port}`||!origins.has(origin)){res.writeHead(403);res.end();return;}
+  const host=`127.0.0.1:${server.address()?.port}`,origin=req.headers.origin;
+  if(req.headers.host!==host){res.writeHead(403);res.end();return;}
+  if(req.method==='GET'&&['/bridge','/relay.js','/relay.css'].includes(req.url)){
+   res.setHeader('Content-Security-Policy',"default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src data:; frame-ancestors 'none'; base-uri 'none'; form-action 'none'");
+   res.setHeader('Referrer-Policy','no-referrer');res.setHeader('Cross-Origin-Opener-Policy','unsafe-none');
+   res.writeHead(200,{'Content-Type':req.url==='/bridge'?'text/html; charset=utf-8':req.url==='/relay.css'?'text/css':'text/javascript; charset=utf-8'});res.end(req.url==='/bridge'?relayHtml:req.url==='/relay.css'?relayCss:relayScript(origins));return;
+  }
+  if(!origins.has(origin)&&origin!==`http://${host}`){res.writeHead(403);res.end();return;}
   res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');
   if(req.method==='OPTIONS'){res.setHeader('Access-Control-Allow-Methods','POST');res.setHeader('Access-Control-Allow-Headers','authorization,content-type');res.setHeader('Access-Control-Allow-Private-Network','true');res.writeHead(204);res.end();return;}
   const auth=Buffer.from(req.headers.authorization||''),expected=Buffer.from('Bearer '+token);
