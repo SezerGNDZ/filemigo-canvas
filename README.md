@@ -1,6 +1,10 @@
 # Filemigo Canvas
 
-**Editable diagrams for people and AI tools.** A JavaScript diagram toolkit, shape/template library and local MCP server, using the same core as [Filemigo Canvas](https://filemigo.com/canvas/).
+**Create, edit and share workflow diagrams.** An offline desktop canvas with shapes, templates, themes, automatic layout and editable exports, using the same core as [Filemigo Canvas](https://filemigo.com/canvas/).
+
+Use the visual editor directly, or optionally connect an AI tool through MCP to create and revise diagrams. The [optional skill](skills/filemigo-workflows/SKILL.md) and [compact MCP interface](docs/agent-protocol.md) support diagram authoring; they are not required for ordinary planning or for using the editor.
+
+This checkout builds **0.6.1**, including workflow review and compact creation from a blank canvas. Run `npm run desktop:package`; binaries live in `out/Filemigo-win32-x64`. Local builds do not publish a GitHub release.
 
 [Developer guide](https://filemigo.com/developers/) · [Türkçe kurulum](docs/README.tr.md) · [Patch API](docs/patches.md)
 
@@ -11,7 +15,7 @@
 - 54 vector shapes and 16 diagram templates: flowcharts, UML, ER and sequence diagrams.
 - Validated editable JSON, automatic layout, SVG and LLM brief/Markdown exports.
 - Atomic edits and semantic comparisons: IDs, text, directions, relationship markers, multiplicities and sequence scopes.
-- 18 local MCP tools over stdio, including live desktop editing. No paid API, model call, telemetry or automatic file access.
+- 26 local MCP tools over stdio, or three in the agent-only profile. Workflow analysis, compact context, scenario tracing, themes and live desktop editing. No paid API, model call, telemetry or automatic file access.
 
 Version **0.4.0** includes a portable Windows x64 desktop editor with bundled MCP. [Download Desktop](https://github.com/latecafe-tech/filemigo-canvas/releases/tag/v0.4.0) · [Desktop setup](docs/desktop.md). Extract the ZIP and run Filemigo.exe; no separate Node.js installation is needed. Live MCP now targets the desktop canvas. The website remains an independent editor.
 

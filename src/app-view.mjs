@@ -2,7 +2,7 @@ import {App} from '@modelcontextprotocol/ext-apps';
 import {createDiagram,arrangeDiagram,updateDiagram,exportDiagram,validateDiagram} from './index.mjs';
 import {renderCanvas,validateCanvas} from './core/canvas-core.mjs';
 import {contentBounds} from './core/canvas-board.mjs';
-const $=s=>document.querySelector(s),app=new App({name:'Filemigo Canvas',version:'0.3.0'});
+const $=s=>document.querySelector(s),app=new App({name:'Filemigo Canvas',version:'0.5.0'});
 const demo=new URLSearchParams(location.search).get('demo')==='1';
 let project=null,undo=[],redo=[],dirty=false,incoming=null,scale=1,selected='',drag=null;
 function message(text){$('#status').textContent=text;}

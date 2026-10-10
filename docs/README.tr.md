@@ -1,13 +1,28 @@
 # Filemigo Canvas — Türkçe
 
-Sürüm **0.4.0**: Windows masaüstü uygulaması, 54 şekil, 16 şablon ve 18 araçlı MCP sunucusu.
+**Workflow oluştur, düzenle ve paylaş.** Çevrimdışı masaüstü editörü; 54 şekil, 16 şablon, temalar, otomatik yerleşim ve düzenlenebilir dışa aktarımlar sunar. AI bağlantısı ve skill isteğe bağlıdır.
+
+Bu kaynak kod **0.6.1** sürümünü oluşturur: akış inceleme, sorumluluk ve girdi/çıktı alanları, senaryo takibi ve boş tuvalden kompakt MCP komutlarıyla workflow oluşturma. Tam MCP profilinde 26, agent profilinde 3 araç bulunur.
 
 ## Masaüstü kurulumu
 
-1. [Windows ZIP paketini indir](https://github.com/latecafe-tech/filemigo-canvas/releases/tag/v0.4.0). Tamamını kalıcı bir klasöre çıkar; Filemigo.exe dosyasını aç.
-2. **MCP kurulumu** düğmesindeki JSON ayarını yerel stdio MCP istemcine ekle ve istemciyi yeniden başlat. Ayrı Node.js kurulumu gerekmez.
-3. Uygulamada **AI bağlantısını aç** düğmesine bas. Asistanından filemigo_live_start ve filemigo_live_read çağrısını iste.
-4. Çizdiklerini masaüstündeki tuvalde canlı gör, elle düzenle, duraklat veya geri al. Ctrl+S ile kaydet; Ctrl+Shift+S ile farklı kaydet.
+Hazır [0.4.0 Windows ZIP paketi](https://github.com/latecafe-tech/filemigo-canvas/releases/tag/v0.4.0) önceki sürümdür; yeni özellikler için bu kaynak koddan 0.6.1 oluştur:
+
+```sh
+npm ci --ignore-scripts
+node node_modules/electron/install.js
+npm run desktop:package
+```
+
+Derleme Node.js 22+ gerektirir. Oluşan `out/Filemigo-win32-x64` klasörünün tamamını kalıcı bir konuma kopyalayıp `Filemigo.exe` dosyasını aç. Paketlenmiş uygulamayı çalıştırmak için ayrı Node.js kurulumu gerekmez. Yeni sürümü açmadan önce eski uygulamada çizimini kaydet ve uygulamayı kapat.
+
+Çizimini elle oluşturabilir, düzenleyebilir ve geri alabilirsin. Ctrl+S ile kaydet; Ctrl+Shift+S ile farklı kaydet. Normal editör kullanımı için MCP bağlantısı gerekmez.
+
+## İsteğe bağlı AI bağlantısı
+
+1. **MCP kurulumu** düğmesindeki JSON ayarını yerel stdio MCP istemcine ekle ve istemciyi yeniden başlat.
+2. Uygulamada **AI bağlantısını aç** düğmesine bas. Tam profilde asistanından `filemigo_live_start` ve `filemigo_live_read` çağrısını iste.
+3. Yalnızca kompakt workflow işlemleri için sunucu ortamına `FILEMIGO_MCP_PROFILE=agent` ekleyebilirsin. `filemigo_agent_contract`, `filemigo_agent_read` ve `filemigo_agent_patch` ile oku, oluştur ve düzenle. [Protokol ve örnekler](agent-protocol.md).
 
 Canlı MCP artık masaüstünde çalışır. Web sitesinde kurulum gerektirmeyen bağımsız editör devam eder. Tarayıcı eşleştirme kodu gerekmez.
 

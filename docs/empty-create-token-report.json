@@ -1,0 +1,47 @@
+{
+  "encoding": "o200k_base",
+  "tiktokenVersion": "0.14.0",
+  "workflowSpecTokens": 183,
+  "nativeProjectTokens": 774,
+  "calls": [
+    {
+      "tool": "filemigo_agent_contract",
+      "action": "read",
+      "requestTokens": 1,
+      "responseTokens": 676
+    },
+    {
+      "tool": "filemigo_agent_read",
+      "action": "read",
+      "requestTokens": 1,
+      "responseTokens": 139
+    },
+    {
+      "tool": "filemigo_agent_patch",
+      "action": "create",
+      "requestTokens": 236,
+      "responseTokens": 73
+    },
+    {
+      "tool": "filemigo_agent_patch",
+      "action": "apply",
+      "requestTokens": 53,
+      "responseTokens": 65
+    },
+    {
+      "tool": "filemigo_agent_read",
+      "action": "read",
+      "requestTokens": 24,
+      "responseTokens": 406
+    },
+    {
+      "tool": "filemigo_agent_read",
+      "action": "read",
+      "requestTokens": 68,
+      "responseTokens": 85
+    }
+  ],
+  "creationThroughVerifiedApply": 567,
+  "creationWithGraphReadback": 997,
+  "method": "Exact compact JSON tool argument and response payloads. Contract, tool discovery, blank-test setup, application diagnostics and model reasoning are excluded from creation totals and reported separately where available."
+}

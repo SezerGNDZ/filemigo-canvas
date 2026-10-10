@@ -1,4 +1,6 @@
-# Filemigo Desktop 0.4.0
+# Filemigo Desktop
+
+This checkout builds **0.6.1**, including [compact agent context](agent-protocol.md) and [workflow intelligence](workflow-intelligence.md). Run `npm ci --ignore-scripts`, `node node_modules/electron/install.js`, then `npm run desktop:package`. The result is `out/Filemigo-win32-x64/Filemigo.exe`. Save the open project and close the older app before starting the new one. Recopy its MCP setup configuration and restart your MCP client; 0.5 tools refuse writes to older desktop builds to preserve metadata.
 
 Filemigo's offline diagram editor and live MCP now run together on your computer. The website remains an independent, installation-free editor. Live browser pairing has been retired in this version.
 

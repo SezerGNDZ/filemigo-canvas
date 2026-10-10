@@ -1,0 +1,4 @@
+interface:
+  display_name: "Filemigo Workflows"
+  short_description: "Read and edit workflows with compact agent context"
+  default_prompt: "Use $filemigo-workflows to inspect only the relevant workflow context and apply a small, verified MCP edit."

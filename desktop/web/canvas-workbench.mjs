@@ -1,3 +1,4 @@
+import {installWorkflowStudio} from './canvas-workflow-ui.mjs';
 import {installSelectionOptions} from './canvas-options.mjs';
 import {shapeCatalog,shapeIcon} from './canvas-shapes.mjs';
 import {palettes,copyStyle,applyStyle,matchSize,relatedSelection,searchObjects,readDraft,writeDraft,draftKey,connectionPresets,applyConnectionPreset} from './canvas-workbench-core.mjs';
@@ -5,6 +6,7 @@ import {movable} from './canvas-geometry.mjs';
 import {escapeXML} from './studio-core.mjs';
 
 export function installWorkbench(api){
+ const workflowStudio=installWorkflowStudio(api);
  const {lang,getProject,getSelection,commit,select,addShape,center,status,restore}=api;
  const s=(en,tr)=>lang==='tr'?tr:en,$=selector=>document.querySelector(selector),esc=escapeXML;
  let favorites=new Set(),recent=[];try{const saved=JSON.parse(localStorage.getItem('filemigo-shape-favorites')||'[]');if(Array.isArray(saved))favorites=new Set(saved.filter(t=>shapeCatalog.some(s=>s.type===t)));}catch{}
@@ -67,7 +69,7 @@ export function installWorkbench(api){
  }
  function sync(inspect=true){
   const ns=getProject().nodes.filter(n=>getSelection().has(n.id));$('#canvas-style-copy').disabled=ns.length!==1||ns[0].type==='image';$('#canvas-style-paste').disabled=!styleClipboard||!movable(getProject(),getSelection()).some(n=>n.type!=='image');
-  if(inspect){$('.canvas-style-studio')?.remove();inspectorExtras();installSelectionOptions(api);}
+  if(inspect){workflowStudio.sync();$('.canvas-style-studio')?.remove();inspectorExtras();installSelectionOptions(api);}
  }
 
  const dialog=document.createElement('dialog');dialog.className='canvas-command-dialog';dialog.setAttribute('aria-label',s('Command palette and object finder','Komut paleti ve nesne bulucu'));

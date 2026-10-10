@@ -1,3 +1,26 @@
+# 0.6.1
+
+- Empty desktop canvases return a compact, actionable creation state instead of a workflow-only error.
+- The same three agent tools now create workflows through `workflowJson`: semantic nodes/links, server-generated shapes/layout/theme, compact previews and revision-bound verified application.
+- Creation never replaces existing objects. Strict validation preserves explicit roles, branches, metadata and uncertainty; empty-to-graph deltas are reconstructible.
+
+# 0.6.0
+
+- Agent context v1: layout-free overview, full semantic graph and bounded neighborhood views with explicit boundary IDs and inference/uncertainty markers.
+- Three MCP tools cache documents, return scope-bound snapshot deltas and preview/apply revision-bound single-use patches with compact verified receipts.
+- Optional `FILEMIGO_MCP_PROFILE=agent` reduces tool discovery to contract/read/patch; the default keeps all 26 tools.
+- Updated progressive-disclosure skill, reproducible tokenizer benchmarks and tests for semantic preservation, partial context, stale reads, locks, cache eviction, concurrent edits and uncertain acknowledgements.
+- Protocol is diagram understanding/editing only; it does not execute workflow tasks or implement distributed agent leases.
+
+# 0.5.0
+
+- Explicit process roles separate starts, steps, decisions, ends, parallel boundaries and annotations. Responsibilities, purpose, inputs and outputs survive native/brief/editable SVG and supported draw.io roundtrips.
+- Transition descriptions no longer produce false guard warnings; explicit conditions and reference links carry distinct semantics.
+- Understand Flow panel reviews logic and walks user-selected scenarios without executing actions or guessing conditions.
+- Midnight, Paper and Ember themes preserve meaning and locks; native MCP patches can change canvas background and dimensions.
+- Five new MCP tools discover capabilities, analyze/trace workflows and preview complete themes. Old desktop writes are refused to prevent metadata loss.
+- Portable filemigo-workflows skill and patch reference; reproducible browser SDK/MCP App build; expanded graph, transport, exchange and browser integration checks.
+
 # 0.4.0
 
 - Portable Windows desktop canvas with offline bundled assets and native Open/Save/Save As.

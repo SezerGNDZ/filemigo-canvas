@@ -1,6 +1,6 @@
 {
   "name": "filemigo-canvas",
-  "version": "0.4.0",
+  "version": "0.6.1",
   "description": "Filemigo diagram toolkit and local MCP server",
   "type": "module",
   "license": "MIT",
@@ -20,7 +20,8 @@
     "README.md",
     "LICENSE",
     "CHANGELOG.md",
-    "desktop"
+    "desktop",
+    "skills"
   ],
   "scripts": {
     "start": "node src/mcp.mjs",
@@ -28,7 +29,8 @@
     "example": "node examples/render.mjs",
     "desktop": "electron .",
     "desktop:prepare": "node desktop/prepare.mjs",
-    "desktop:package": "node desktop/package.mjs"
+    "desktop:package": "npm run build:runtime && node desktop/package.mjs",
+    "build:runtime": "node desktop/build-runtime.mjs"
   },
   "repository": {
     "type": "git",
@@ -51,7 +53,8 @@
   ],
   "devDependencies": {
     "@electron/packager": "20.3.0",
-    "electron": "44.7.0"
+    "electron": "44.7.0",
+    "esbuild": "^0.25.10"
   },
   "main": "desktop/main.mjs"
 }

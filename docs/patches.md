@@ -2,7 +2,11 @@
 
 `updateDiagram(project, patch)` returns `{ project, issues, comparison }`. It does not modify the input. Every edit is validated before returning; any invalid reference rejects the complete patch. MCP accepts the same patch serialized as `patchJson`.
 
-Patch keys: `title`, `nodes`, `edges`, `addNodes`, `addEdges`, `removeNodes`, `removeEdges`.
+Patch keys: `title`, `description`, `background`, `width`, `height`, `infinite`, `sourceTool`, `nodes`, `edges`, `addNodes`, `addEdges`, `removeNodes`, `removeEdges`. Canvas dimensions are 300–4000. Colors are `#RRGGBB` or `none`. Root updates validate atomically with the rest of the patch.
+
+Node semantics: `role` (`start`, `step`, `decision`, `end`, `fork`, `join`, `annotation`), plus `purpose`, `owner`, `input`, `output` (strings, up to 1200 characters each). Root `description` allows 2000 characters. These fields are preserved and included in semantic comparisons.
+
+Edge semantics: `kind` (`transition`, `condition`, `reference`) and optional `branch` (`yes`, `no`, only on condition edges). Changing kind away from `condition` removes its branch. Annotation nodes and reference links are excluded from process analysis. A transition label describes its link; it is not inferred to be a guard.
 
 `nodes` updates by `id`: `text`, `type`, `x`, `y`, `w`, `h`, `fill`, `stroke`, `color`, `fontSize`, `align`, `locked`, `group`, `bold`, `italic`.
 

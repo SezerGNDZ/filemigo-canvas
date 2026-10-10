@@ -9,7 +9,28 @@ import {routePlan,refreshRoutes} from './core/canvas-geometry.mjs';
 import {importDrawio,exportDrawio,readEditableSvg} from './drawio.mjs';
 import {escapeXML} from './core/studio-core.mjs';
 
-export const version='0.4.0';
+export const version='0.6.1';
+import {agentContext as context} from './core/canvas-agent.mjs';
+export {agentContract} from './core/canvas-agent.mjs';
+export function agentContext(input,options){return context(project(input),options);}
+export function createWorkflow(input,{lang='en'}={}){
+ const spec=parse(input);
+ const keys=(o,allowed,label)=>{if(!o||typeof o!=='object'||Array.isArray(o))throw Error(label+' must be an object');for(const k of Object.keys(o))if(!allowed.includes(k))throw Error('Unknown '+label+' field: '+k);};
+ keys(spec,['title','description','nodes','edges','theme','direction'],'workflow');
+ if(!Array.isArray(spec.nodes)||!spec.nodes.length||spec.nodes.length>150||!Array.isArray(spec.edges)||spec.edges.length>200)throw Error('Provide 1–150 nodes and up to 200 edges');
+ const shapes={start:'terminator',end:'terminator',step:'rounded',decision:'diamond',fork:'join',join:'join',annotation:'note'};
+ const nodes=spec.nodes.map(n=>{keys(n,['id','text','role','purpose','owner','input','output'],'node');const role=n.role??'step';if(!Object.hasOwn(shapes,role))throw Error('Unknown node role');return {...n,role,shape:shapes[role]};});
+ const edges=spec.edges.map((e,i)=>{keys(e,['id','from','to','kind','branch','label'],'edge');return {...e,id:e.id??'e'+(i+1),kind:e.kind??(e.branch!==undefined?'condition':'transition'),label:e.label??(e.branch==='yes'?'Yes':e.branch==='no'?'No':''),startMarker:'none',endMarker:e.kind==='reference'?'none':'arrow',dashed:e.kind==='reference'};});
+ const direction=spec.direction??'TB';if(!['TB','LR'].includes(direction))throw Error('direction must be TB or LR');
+ const created=createDiagram({format:'filemigo-diagram',version:1,kind:'flowchart',title:spec.title,...(spec.description!==undefined?{description:spec.description}:{}),nodes,edges},{direction,lang});
+ return styleDiagram(created.project,{theme:spec.theme??'midnight',lang});
+}
+import {analyzeWorkflow as analyze,traceWorkflow as trace,themePatch,workflowThemes} from './core/canvas-workflow.mjs';
+export function analyzeWorkflow(input,options){return analyze(project(input),options);}
+export function traceWorkflow(input,options){return trace(project(input),options);}
+export function capabilities(){return {version,transport:'local stdio',liveTarget:'Filemigo Desktop',nodeRoles:['start','step','decision','end','fork','join','annotation'],edgeKinds:['transition','condition','reference'],semanticFields:['purpose','owner','input','output'],patchRootFields:['title','description','background','width','height','infinite','sourceTool'],agentProtocol:1,agentCreation:true,agentTools:['agent_contract','agent_read','agent_patch'],agentProfile:'FILEMIGO_MCP_PROFILE=agent',workflowAnalysis:true,scenarioWalkthrough:true,executesWorkflow:false,themes:Object.keys(workflowThemes),limits:{nodes:150,edges:200,inputCharacters:1000000},liveProtocol:['live_start','live_read','preview_changes','live_read','live_update','live_read'],skill:'skills/filemigo-workflows/SKILL.md'};}
+export function listThemes(){return Object.entries(workflowThemes).map(([id,t])=>({id,...t}));}
+export function styleDiagram(input,{theme='midnight',lang='en'}={}){const p=project(input),patch=themePatch(p,theme);return {...updateDiagram(p,patch,{lang}),patch};}
 export {importDrawio,exportDrawio,readEditableSvg};
 export function importDiagram(source,{format='drawio',page=0}={}){if(format==='drawio')return importDrawio(source,{page});if(format==='editable-svg')return readEditableSvg(source);throw Error('Supported imports: drawio, editable-svg.');}
 export {systemPrompt,exampleDiagram};
@@ -37,10 +58,10 @@ export function createDiagram(input,{direction='LR',lang='en'}={}){
  return readLlmDiagram(JSON.stringify(data),{direction,lang});
 }
 export function validateDiagram(input,{lang='en'}={}){try{const p=project(input);const warnings=issues(p,lang);return {valid:true,exportable:!warnings.some(i=>i.code==='route-space'),nodeCount:p.nodes.length,edgeCount:p.edges.length,issues:warnings};}catch(error){return {valid:false,exportable:false,issues:[{code:'invalid-diagram',ids:[],message:error.message}]};}}
-function meaning(p){const b=createBrief(p);return {title:p.title,kind:b.diagram.kind,nodes:b.nodes,edges:b.edges,fragments:p.fragments||[]};}
+function meaning(p){const b=createBrief(p);return {title:p.title,description:p.description||'',kind:b.diagram.kind,nodes:b.nodes,edges:b.edges,fragments:p.fragments||[]};}
 function diff(a,b){
  const changes=[];
- for(const key of ['title','kind','fragments'])if(JSON.stringify(a[key])!==JSON.stringify(b[key]))changes.push({type:'changed',target:key,before:a[key],after:b[key]});
+ for(const key of ['title','description','kind','fragments'])if(JSON.stringify(a[key])!==JSON.stringify(b[key]))changes.push({type:'changed',target:key,before:a[key],after:b[key]});
  for(const key of ['nodes','edges']){const left=new Map(a[key].map(x=>[x.id,x])),right=new Map(b[key].map(x=>[x.id,x]));for(const [id,value]of left){if(!right.has(id))changes.push({type:'removed',target:key,id,before:value});else if(JSON.stringify(value)!==JSON.stringify(right.get(id)))changes.push({type:'changed',target:key,id,before:value,after:right.get(id)});}for(const [id,value]of right)if(!left.has(id))changes.push({type:'added',target:key,id,after:value});}
  return {unchanged:changes.length===0,changes};
 }
@@ -53,13 +74,13 @@ export function arrangeDiagram(input,{direction='LR',lang='en'}={}){
 export function updateDiagram(input,patch,{lang='en'}={}){
  const before=project(input),p=clone(before),change=parse(patch);
  if(!change||Array.isArray(change)||typeof change!=='object')throw Error('Patch must be an object.');
- const allowed=['title','nodes','edges','addNodes','addEdges','removeNodes','removeEdges'];
+ const allowed=['title','description','background','width','height','infinite','sourceTool','nodes','edges','addNodes','addEdges','removeNodes','removeEdges'];
  for(const k of Object.keys(change))if(!allowed.includes(k))throw Error('Unknown patch field: '+k);
- const nodeFields=['text','type','x','y','w','h','fill','stroke','color','fontSize','align','locked','group','bold','italic','radius','strokeWidth','dash','fontFamily','verticalAlign','opacity','padding'];
- const edgeFields=['from','to','label','start','end','dashed','startLabel','endLabel','routing','fromPort','toPort','color','strokeWidth'];
+ const nodeFields=['role','purpose','owner','input','output','text','type','x','y','w','h','fill','stroke','color','fontSize','align','locked','group','bold','italic','radius','strokeWidth','dash','fontFamily','verticalAlign','opacity','padding'];
+ const edgeFields=['kind','branch','from','to','label','start','end','dashed','startLabel','endLabel','routing','fromPort','toPort','color','strokeWidth'];
  for(const [key,fields]of [['nodes',nodeFields],['edges',edgeFields]]){
   const list=change[key]||[];if(!Array.isArray(list))throw Error(key+' must be an array.');const used=new Set();
-  for(const update of list){if(!update||typeof update!=='object'||used.has(update.id))throw Error('Invalid or duplicate patch ID.');used.add(update.id);const target=p[key].find(n=>n.id===update.id);if(!target)throw Error('Unknown '+key+' ID: '+update.id);for(const k of Object.keys(update))if(k!=='id'&&!fields.includes(k))throw Error('Unsupported '+key+' patch field: '+k);Object.assign(target,update);}
+  for(const update of list){if(!update||typeof update!=='object'||used.has(update.id))throw Error('Invalid or duplicate patch ID.');used.add(update.id);const target=p[key].find(n=>n.id===update.id);if(!target)throw Error('Unknown '+key+' ID: '+update.id);for(const k of Object.keys(update))if(k!=='id'&&!fields.includes(k))throw Error('Unsupported '+key+' patch field: '+k);Object.assign(target,update);if(key==='edges'&&update.kind!==undefined&&update.kind!=='condition')delete target.branch;}
  }
  for(const key of ['Nodes','Edges']){
   const list=key.toLowerCase(),removed=change['remove'+key]||[],added=change['add'+key]||[];
@@ -67,7 +88,7 @@ export function updateDiagram(input,patch,{lang='en'}={}){
   for(const id of removed)if(!p[list].some(n=>n.id===id))throw Error('Unknown removal ID: '+id);
   p[list]=p[list].filter(n=>!removed.includes(n.id)).concat(added);
  }
- if(change.title!==undefined)p.title=change.title;
+ for(const key of ['title','description','background','width','height','infinite','sourceTool'])if(change[key]!==undefined)p[key]=change[key];
  const checked=validateCanvas(p);return {...result(checked,lang),comparison:diff(meaning(before),meaning(checked))};
 }
 export function exportDiagram(input,{format='svg',lang='en',padding=32}={}){

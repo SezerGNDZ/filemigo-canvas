@@ -1,0 +1,39 @@
+{
+  "fixture": "NOVA / STUDIO — İnsan + AI içerik akışı",
+  "nodes": 21,
+  "edges": 17,
+  "focusId": "approved",
+  "modifiedId": "approval",
+  "tiktokenVersion": "0.14.0",
+  "counts": {
+    "o200k_base": {
+      "native": 3727,
+      "brief": 5065,
+      "contract": 523,
+      "overview": 277,
+      "graph": 1371,
+      "focus": 400,
+      "preview": 91,
+      "receipt": 66,
+      "delta": 195,
+      "unchanged": 82,
+      "fullTools": 4295,
+      "agentTools": 526
+    },
+    "cl100k_base": {
+      "native": 3858,
+      "brief": 5277,
+      "contract": 517,
+      "overview": 298,
+      "graph": 1488,
+      "focus": 421,
+      "preview": 89,
+      "receipt": 66,
+      "delta": 198,
+      "unchanged": 82,
+      "fullTools": 4229,
+      "agentTools": 510
+    }
+  },
+  "method": "Exact tokens in minified JSON payloads; includes response envelopes. Full/agent tools are tools/list responses from 0.6. Contract is a one-time extra cost. Views omit rendering/decorations and are not equivalent editable exports. No model reasoning, transport wrappers, provider billing or task-success measurements."
+}
