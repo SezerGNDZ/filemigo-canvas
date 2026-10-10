@@ -1,3 +1,11 @@
+# 0.3.0
+
+- Interactive MCP App resource and show/import/preview tools (18 tools total).
+- Non-mutating change previews and optional user-applied browser proposals with revision protection.
+- Supported draw.io XML import/export; compressed pages, endpoint labels and explicit unsupported-feature errors.
+- Editable SVG with embedded native project, import review and small-project handoff.
+- Expanded patch style fields and design-review prompt.
+
 # 0.2.2
 
 - Repository now owned by latecafe-tech (Late Cafe Games); original SezerGNDZ authorship retained.

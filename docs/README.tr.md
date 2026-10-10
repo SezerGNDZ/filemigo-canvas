@@ -1,6 +1,6 @@
 # Filemigo Canvas — Türkçe
 
-54 vektörel şekil, 16 diyagram şablonu, JavaScript diyagram kütüphanesi ve 15 araçlı yerel MCP sunucusu. Sürüm: **0.2.2**.
+54 vektörel şekil, 16 diyagram şablonu, JavaScript diyagram kütüphanesi ve 18 araçlı yerel MCP sunucusu. Sürüm: **0.3.0**.
 
 ## Kurulum
 
@@ -32,3 +32,11 @@ Yerel Node/stdio MCP istemcisi gerekir; yalnızca bulut üzerinden çalışan is
 Bir **Late Cafe Games** projesi. Orijinal geliştirici ve katkıcı: **SezerGNDZ**.
 
 WebMCP destekleyen tarayıcılarda **Tarayıcı asistanını bağla** ile kurulum olmadan canlı çalışabilirsin. Diğer istemcilerde yerel bağlantı penceresi açılırsa açık tutup tuvale dön. Pencere engellenirse doğrudan bağlantı için tarayıcı yerel erişim izni isteyebilir.
+
+## 0.3: MCP Apps, inceleme ve aktarım
+
+- `filemigo_show_diagram`: uyumlu yerel MCP Apps istemcisinde etkileşimli önizleme. Metin düzenleme, geri alma, yerleşim, indirme ve Filemigo’da açma.
+- `filemigo_preview_changes`: tuvali değiştirmeden önerilen değişikliklerin dökümü. Tarayıcıdaki `filemigo_canvas_propose` önerisi kullanıcı uygulayana kadar bekler; arada yapılan düzenleme eski öneriyi geçersiz kılar.
+- `filemigo_import_diagram`: desteklenen draw.io XML sayfası veya düzenlenebilir Filemigo SVG. Tuvalde **İçe / dışa aktar** düğmesinden önizle.
+- Çoklu katmanlar, iç içe gruplar, özel şekiller, desteklenmeyen oklar ve sıralama blokları draw.io aktarımında desteklenmez. Tam draw.io uyumluluğu iddiası yoktur. JSON/düzenlenebilir SVG Filemigo verisini korur.
+- Uzak MCP adresi veya uygulama mağazası kaydı yoktur. MCP App için yerel stdio ve MCP Apps desteği gerekir. Önizlemedeki değişiklikler açık tuvale otomatik yazılmaz.

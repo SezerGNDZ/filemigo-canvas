@@ -6,8 +6,12 @@ import {shapeCatalog} from './core/canvas-shapes.mjs';
 import {studioTemplates} from './core/studio-data.mjs';
 import {canvasTemplate} from './core/canvas-templates.mjs';
 import {routePlan,refreshRoutes} from './core/canvas-geometry.mjs';
+import {importDrawio,exportDrawio,readEditableSvg} from './drawio.mjs';
+import {escapeXML} from './core/studio-core.mjs';
 
-export const version='0.2.2';
+export const version='0.3.0';
+export {importDrawio,exportDrawio,readEditableSvg};
+export function importDiagram(source,{format='drawio',page=0}={}){if(format==='drawio')return importDrawio(source,{page});if(format==='editable-svg')return readEditableSvg(source);throw Error('Supported imports: drawio, editable-svg.');}
 export {systemPrompt,exampleDiagram};
 const clone=v=>structuredClone(v);
 function parse(input){
@@ -51,8 +55,8 @@ export function updateDiagram(input,patch,{lang='en'}={}){
  if(!change||Array.isArray(change)||typeof change!=='object')throw Error('Patch must be an object.');
  const allowed=['title','nodes','edges','addNodes','addEdges','removeNodes','removeEdges'];
  for(const k of Object.keys(change))if(!allowed.includes(k))throw Error('Unknown patch field: '+k);
- const nodeFields=['text','type','x','y','w','h','fill','stroke','color','fontSize','align','locked','group','bold','italic'];
- const edgeFields=['from','to','label','start','end','dashed','startLabel','endLabel','routing','fromPort','toPort','color'];
+ const nodeFields=['text','type','x','y','w','h','fill','stroke','color','fontSize','align','locked','group','bold','italic','radius','strokeWidth','dash','fontFamily','verticalAlign','opacity','padding'];
+ const edgeFields=['from','to','label','start','end','dashed','startLabel','endLabel','routing','fromPort','toPort','color','strokeWidth'];
  for(const [key,fields]of [['nodes',nodeFields],['edges',edgeFields]]){
   const list=change[key]||[];if(!Array.isArray(list))throw Error(key+' must be an array.');const used=new Set();
   for(const update of list){if(!update||typeof update!=='object'||used.has(update.id))throw Error('Invalid or duplicate patch ID.');used.add(update.id);const target=p[key].find(n=>n.id===update.id);if(!target)throw Error('Unknown '+key+' ID: '+update.id);for(const k of Object.keys(update))if(k!=='id'&&!fields.includes(k))throw Error('Unsupported '+key+' patch field: '+k);Object.assign(target,update);}
@@ -68,10 +72,17 @@ export function updateDiagram(input,patch,{lang='en'}={}){
 }
 export function exportDiagram(input,{format='svg',lang='en',padding=32}={}){
  const p=project(input);if(format==='json')return JSON.stringify(p,null,2);
+ if(format==='drawio')return exportDrawio(p);
  if(format==='brief')return JSON.stringify(createBrief(p,{lang,includeLayout:true}),null,2);
  if(format==='markdown')return briefMarkdown(createBrief(p,{lang}));
- if(format!=='svg')throw Error('Supported exports: svg, json, brief, markdown.');
+ if(!['svg','editable-svg'].includes(format))throw Error('Supported exports: svg, editable-svg, drawio, json, brief, markdown.');
  if(!Number.isFinite(padding)||padding<0||padding>256)throw Error('Padding must be 0–256.');
  if(issues(p,lang).some(i=>i.code==='route-space'))throw Error('Connection routing conflict; rearrange before SVG export.');
- return renderCanvas(p,{viewport:contentBounds(p,padding)});
+ const svg=renderCanvas(p,{viewport:contentBounds(p,padding)});
+ return format==='editable-svg'?svg.replace('</svg>',`<metadata id="filemigo-project">${escapeXML(JSON.stringify(p))}</metadata></svg>`):svg;
+}
+export function previewChanges(input,patch,{lang='en'}={}){
+ const before=project(input),after=updateDiagram(before,patch,{lang});
+ const changed=[];for(const kind of ['nodes','edges']){const old=new Map(before[kind].map(x=>[x.id,x]));for(const n of after.project[kind]){if(!old.has(n.id))changed.push({kind,id:n.id,type:'added'});else if(JSON.stringify(old.get(n.id))!==JSON.stringify(n))changed.push({kind,id:n.id,type:'changed'});old.delete(n.id);}for(const id of old.keys())changed.push({kind,id,type:'removed'});}
+ return {...after,changed,summary:{added:changed.filter(x=>x.type==='added').length,removed:changed.filter(x=>x.type==='removed').length,modified:changed.filter(x=>x.type==='changed').length,semanticChanges:after.comparison.changes.length},applied:false};
 }

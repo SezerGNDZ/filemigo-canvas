@@ -11,9 +11,9 @@
 - 54 vector shapes and 16 diagram templates: flowcharts, UML, ER and sequence diagrams.
 - Validated editable JSON, automatic layout, SVG and LLM brief/Markdown exports.
 - Atomic edits and semantic comparisons: IDs, text, directions, relationship markers, multiplicities and sequence scopes.
-- 15 local MCP tools over stdio, including live browser editing. No paid API, model call, telemetry or automatic file access.
+- 18 local MCP tools over stdio, including live browser editing. No paid API, model call, telemetry or automatic file access.
 
-Version **0.2.2** is an early developer release. This is a headless diagram toolkit, not a packaged drag-and-drop editor. Use the website for interactive editing. The optional live bridge edits one explicitly paired browser canvas. It does not read `.drawio` files.
+Version **0.3.0** is an early developer release. This is a headless diagram toolkit, not a packaged drag-and-drop editor. Use the website for interactive editing. The optional live bridge edits one explicitly paired browser canvas. It imports a supported subset of `.drawio` XML; unsupported features fail explicitly.
 
 A **Late Cafe Games** project. Original author and contributor: [SezerGNDZ](https://github.com/SezerGNDZ).
 
@@ -55,7 +55,7 @@ Workflow: `filemigo_instructions` → `filemigo_list_shapes` or `filemigo_get_te
 
 ## Live browser editing
 
-**Supported browser assistants:** Filemigo also offers WebMCP directly in the open page. Click **Connect browser assistant** in Live MCP when available. Three page tools read, patch and arrange the canvas through the same revision/undo guards. No local server installation is needed for that mode. Enablement is per page and can be revoked.
+**Supported browser assistants:** Filemigo also offers WebMCP directly in the open page. Click **Connect browser assistant** in Live MCP when available. Four page tools read, patch and arrange the canvas through the same revision/undo guards. No local server installation is needed for that mode. Enablement is per page and can be revoked.
 
 **Other local MCP clients:** use this downloadable server:
 
@@ -107,3 +107,13 @@ Structural validation is not proof of business correctness. Review branch condit
 ## Contributing and license
 
 MIT for the original Filemigo code in this repository. Dependencies retain their own licenses. This repository contains no draw.io source, icons or stencils. Submit reproducible issues or focused pull requests with tests. Do not include confidential diagrams in public issues. See [CHANGELOG](CHANGELOG.md).
+
+## Interactive MCP Apps and file exchange (0.3)
+
+Call `filemigo_show_diagram` in a local MCP Apps-compatible host for an interactive preview. It includes text editing, undo/redo, zoom, automatic layout, JSON/editable SVG/draw.io downloads and Open in Filemigo. Changes in the preview are independent of the paired live canvas. Hosts without MCP Apps receive structured JSON. This package does not provide a hosted remote HTTP endpoint or a store listing.
+
+Use `filemigo_preview_changes` for a non-mutating patch preview with added/modified/removed counts and semantic differences. The browser's `filemigo_canvas_propose` tool displays a proposal that the user may apply or dismiss. It expires after ten minutes; any intervening canvas edit invalidates it.
+
+`filemigo_import_diagram` reads draw.io XML (plain or compressed, one selected page) or Filemigo editable SVG. Imports preserve supported IDs, labels, endpoints, markers and multiplicities. Limits: 1 MB source/decompressed XML, 150 objects, 200 connectors. Multiple layers, nested groups, hidden content, rotated objects, unsupported shapes/markers and sequence scopes are rejected. HTML formatting is flattened with a warning; manual waypoints may be rerouted. This is not complete draw.io compatibility.
+
+`export_diagram` adds `editable-svg` (full Filemigo project embedded) and `drawio` (basic supported shapes/relationships). The editor's **Import / export** button previews imports before replacement and keeps undo available. Editable SVG contains your project text and embedded images; share it only with intended recipients. Open in Filemigo carries small projects in a URL fragment, clears that fragment on receipt and asks before replacing the canvas. For larger projects use JSON.
