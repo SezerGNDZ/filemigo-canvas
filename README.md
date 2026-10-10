@@ -11,9 +11,11 @@
 - 54 vector shapes and 16 diagram templates: flowcharts, UML, ER and sequence diagrams.
 - Validated editable JSON, automatic layout, SVG and LLM brief/Markdown exports.
 - Atomic edits and semantic comparisons: IDs, text, directions, relationship markers, multiplicities and sequence scopes.
-- 10 local MCP tools over stdio. No API key, model call, telemetry, network listener or automatic file access.
+- 15 local MCP tools over stdio, including live browser editing. No paid API, model call, telemetry or automatic file access.
 
-Version **0.1.0** is an early developer release. This is a headless diagram toolkit, not a packaged drag-and-drop editor. Use the website for interactive editing. The MCP server returns data; it does not control an open browser tab. It does not read `.drawio` files.
+Version **0.2.0** is an early developer release. This is a headless diagram toolkit, not a packaged drag-and-drop editor. Use the website for interactive editing. The optional live bridge edits one explicitly paired browser canvas. It does not read `.drawio` files.
+
+A **Late Cafe Games** project. Original author and contributor: [SezerGNDZ](https://github.com/SezerGNDZ).
 
 ## Install from GitHub
 
@@ -50,6 +52,19 @@ Ask your assistant:
 > Use Filemigo to create an order approval flowchart with explicit Yes/No stock branches. Check the diagram, export SVG and native JSON, and show me any warnings. Keep existing relationships when editing it.
 
 Workflow: `filemigo_instructions` → `filemigo_list_shapes` or `filemigo_get_template` → `filemigo_create_diagram` → `filemigo_validate_diagram` → `filemigo_export_diagram`. The assistant/client can save returned text using its own authorized file tools. Open the native JSON with **Open** at [filemigo.com/canvas](https://filemigo.com/canvas/).
+
+## Live browser editing
+
+1. Configure the local MCP server above, then ask the assistant to call `filemigo_live_start`.
+2. Open [Filemigo Canvas](https://filemigo.com/canvas/), expand **Live MCP**, and paste the returned pairing code. Connecting shares this canvas with the AI client and permits live edits. Keep the code private; never place it in a URL.
+3. Ask the assistant to call `filemigo_live_read`, then `filemigo_live_update` with that exact `expectedRevision`, or `filemigo_live_arrange`. Every accepted operation is one undo step. Use native node/edge fields from `create_diagram` when adding new objects.
+4. Pause edits or disconnect from the canvas at any time. `filemigo_live_stop` also closes the local listener.
+
+The bridge listens only on `127.0.0.1` on a random port, uses a random session token, and checks both Host and Origin. No hosted relay or subscription is required. Chrome/Edge may ask for loopback/local-network permission; other browsers or embedded webviews may block it. Do not disable browser security. The live canvas needs to stay visible. A remote/cloud-only MCP client cannot access your computer's bridge.
+
+AI changes use compare-and-swap revisions, validate the complete graph and wait for browser acknowledgement. If you edit during an AI calculation, the stale result is rejected. The client must reread after conflicts/timeouts; a lost acknowledgement can mean an operation already applied. Edits to text/relations require `allowSemanticChanges: true` for a user-requested change; ordinary layout/style changes cannot silently change meaning. This is structural protection, not proof of the intended business logic. The browser keeps a short activity log and its existing recovery draft.
+
+Live tools: `filemigo_live_start`, `filemigo_live_read`, `filemigo_live_update`, `filemigo_live_arrange`, `filemigo_live_stop`.
 
 ## JavaScript API
 

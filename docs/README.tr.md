@@ -1,6 +1,6 @@
 # Filemigo Canvas — Türkçe
 
-54 vektörel şekil, 16 diyagram şablonu, JavaScript diyagram kütüphanesi ve 10 araçlı yerel MCP sunucusu. Sürüm: **0.1.0**.
+54 vektörel şekil, 16 diyagram şablonu, JavaScript diyagram kütüphanesi ve 15 araçlı yerel MCP sunucusu. Sürüm: **0.2.0**.
 
 ## Kurulum
 
@@ -17,6 +17,16 @@ MCP destekleyen yapay zekâ uygulamasında yerel stdio sunucusu ekle. Komut `nod
 
 “Filemigo ile stok kontrolü ve açık Evet/Hayır dalları içeren bir sipariş akışı oluştur; doğrula, SVG ve proje JSON'u üret” diye iste. Sunucu çıktı metni döndürür; dosyayı kaydetmek yapay zekâ uygulamasının dosya araçlarına aittir. Proje JSON'unu [Filemigo tuvalindeki](https://filemigo.com/tr/canvas/) **Aç** düğmesiyle açabilirsin.
 
-Bu paket diyagram motorudur; sürükle bırak editörünü paketlemez ve açık tarayıcıyı kontrol etmez. `.drawio` içe aktarma yoktur. İlk kurulum npm bağımlılıklarını indirir; çalışma sırasında paketin kendisi ağ isteği veya model çağrısı yapmaz. Kullandığın LLM'nin aboneliği ve veri işleme koşulları ayrıdır.
+Bu paket diyagram motorudur; sürükle bırak editörünü paketlemez ; isteğe bağlı Canlı MCP ile açık tuval düzenlenebilir. `.drawio` içe aktarma yoktur. İlk kurulum npm bağımlılıklarını indirir; Canlı MCP yalnızca bilgisayarında kimlik doğrulamalı bağlantı açar; model çağrısı yapmaz. Kullandığın LLM'nin aboneliği ve veri işleme koşulları ayrıdır.
 
 150 nesne, 200 bağlantı, 1.000.000 girdi karakteri. MCP işlem süresi sınırı 10 saniye. Geçerli yapı, doğru iş mantığı garantisi değildir. İlişkileri ve uyarıları kontrol et. Orijinal Filemigo kaynak kodu MIT lisanslıdır.
+
+## Canlı tuval
+
+MCP istemcisinde `filemigo_live_start` çağrısını iste. [Tuvalde](https://filemigo.com/tr/canvas/) **Canlı MCP** panelini açıp eşleştirme kodunu yapıştır. Bu işlem tuvalini o AI istemcisine açar; kodu paylaşma veya URL içine koyma. Bir oturumda tek sekme eşleşir.
+
+AI önce `filemigo_live_read` ile sürümü okur; `filemigo_live_update` veya `filemigo_live_arrange` çağrısında `expectedRevision` gönderir. Sen arada düzenleme yaparsan eski işlem reddedilir. Değişiklikler geri alınabilir. Duraklatma ve bağlantıyı kesme düğmeleri kontrolü sende tutar. İlişki veya metin değiştirmek için kullanıcı isteğine dayanan `allowSemanticChanges: true` gerekir.
+
+Yerel Node/stdio MCP istemcisi gerekir; yalnızca bulut üzerinden çalışan istemciler bilgisayarındaki köprüye ulaşamaz. Tarayıcı yerel bağlantı izni isteyebilir. Güvenlik ayarlarını kapatma; izin verilmezse dosya aktarımıyla çalışmaya devam edebilirsin. Tuval görünür olmalıdır; arka plan sekmelerinde AI düzenlemesi durur. Bağlantı gecikmesinde başarı varsayılmaz; AI önce güncel tuvali yeniden okumalıdır.
+
+Bir **Late Cafe Games** projesi. Orijinal geliştirici ve katkıcı: **SezerGNDZ**.

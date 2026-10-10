@@ -8,7 +8,7 @@ test('real stdio client negotiates, discovers tools, creates, edits and exports'
  const client=new Client({name:'filemigo-test',version:'1.0.0'});
  const transport=new StdioClientTransport({command:process.execPath,args:[fileURLToPath(new URL('../src/mcp.mjs',import.meta.url))],stderr:'pipe'});
  try{
-  await client.connect(transport);const tools=await client.listTools();assert.equal(tools.tools.length,10);
+  await client.connect(transport);const tools=await client.listTools();assert.equal(tools.tools.length,15);
   const call=(name,args={})=>client.callTool({name:'filemigo_'+name,arguments:args});
   const shapes=await call('list_shapes');assert.equal(JSON.parse(shapes.content[0].text).length,54);
   assert.match((await call('instructions')).content[0].text,/filemigo-diagram v1/);
