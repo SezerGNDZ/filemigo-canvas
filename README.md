@@ -11,9 +11,9 @@
 - 54 vector shapes and 16 diagram templates: flowcharts, UML, ER and sequence diagrams.
 - Validated editable JSON, automatic layout, SVG and LLM brief/Markdown exports.
 - Atomic edits and semantic comparisons: IDs, text, directions, relationship markers, multiplicities and sequence scopes.
-- 18 local MCP tools over stdio, including live browser editing. No paid API, model call, telemetry or automatic file access.
+- 18 local MCP tools over stdio, including live desktop editing. No paid API, model call, telemetry or automatic file access.
 
-Version **0.3.0** is an early developer release. This is a headless diagram toolkit, not a packaged drag-and-drop editor. Use the website for interactive editing. The optional live bridge edits one explicitly paired browser canvas. It imports a supported subset of `.drawio` XML; unsupported features fail explicitly.
+Version **0.4.0** includes a portable Windows x64 desktop editor with bundled MCP. [Download Desktop](https://github.com/latecafe-tech/filemigo-canvas/releases/tag/v0.4.0) · [Desktop setup](docs/desktop.md). Extract the ZIP and run Filemigo.exe; no separate Node.js installation is needed. Live MCP now targets the desktop canvas. The website remains an independent editor.
 
 A **Late Cafe Games** project. Original author and contributor: [SezerGNDZ](https://github.com/SezerGNDZ).
 
@@ -53,23 +53,13 @@ Ask your assistant:
 
 Workflow: `filemigo_instructions` → `filemigo_list_shapes` or `filemigo_get_template` → `filemigo_create_diagram` → `filemigo_validate_diagram` → `filemigo_export_diagram`. The assistant/client can save returned text using its own authorized file tools. Open the native JSON with **Open** at [filemigo.com/canvas](https://filemigo.com/canvas/).
 
-## Live browser editing
+## Live desktop editing
 
-**Supported browser assistants:** Filemigo also offers WebMCP directly in the open page. Click **Connect browser assistant** in Live MCP when available. Four page tools read, patch and arrange the canvas through the same revision/undo guards. No local server installation is needed for that mode. Enablement is per page and can be revoked.
+Open Filemigo Desktop → **MCP kurulumu** → copy the generated config into your local stdio MCP client → restart the client → **AI bağlantısını aç**. See [the complete guide](docs/desktop.md).
 
-**Other local MCP clients:** use this downloadable server:
+Call filemigo_live_start, then filemigo_live_read before each filemigo_live_update or filemigo_live_arrange. Use the exact expectedRevision. Manual changes, locks, modal dialogs and paused edits are protected. Accepted changes enter normal undo history. AI never saves a project file itself.
 
-
-1. Configure the local MCP server above, then ask the assistant to call `filemigo_live_start`.
-2. Open [Filemigo Canvas](https://filemigo.com/canvas/), expand **Live MCP**, and paste the returned pairing code. Connecting shares this canvas with the AI client and permits live edits. Keep the code private; never place it in a URL.
-3. Ask the assistant to call `filemigo_live_read`, then `filemigo_live_update` with that exact `expectedRevision`, or `filemigo_live_arrange`. Every accepted operation is one undo step. Use native node/edge fields from `create_diagram` when adding new objects.
-4. Pause edits or disconnect from the canvas at any time. `filemigo_live_stop` also closes the local listener.
-
-The bridge listens only on `127.0.0.1` on a random port, uses a random session token, and checks both Host and Origin. No hosted relay or subscription is required. The canvas opens a local connection window when supported. Keep it open and return to the canvas. It validates message source and origin and keeps pairing codes out of URLs. When popups are blocked, direct connection may require loopback/local-network permission. Embedded browsers can block direct loopback access; use their native WebMCP mode when available. Do not disable browser security. The live canvas needs to stay visible. A remote/cloud-only MCP client cannot access your computer's bridge.
-
-AI changes use compare-and-swap revisions, validate the complete graph and wait for browser acknowledgement. If you edit during an AI calculation, the stale result is rejected. The client must reread after conflicts/timeouts; a lost acknowledgement can mean an operation already applied. Edits to text/relations require `allowSemanticChanges: true` for a user-requested change; ordinary layout/style changes cannot silently change meaning. This is structural protection, not proof of the intended business logic. The browser keeps a short activity log and its existing recovery draft.
-
-Live tools: `filemigo_live_start`, `filemigo_live_read`, `filemigo_live_update`, `filemigo_live_arrange`, `filemigo_live_stop`.
+The desktop uses an authenticated local named pipe. No website pairing code or HTTP listener is needed. AI starts disabled; disconnecting in the app revokes all clients. A cloud-only client cannot launch the executable. The enabled diagram is shared with the chosen AI client.
 
 ## JavaScript API
 
@@ -112,7 +102,7 @@ MIT for the original Filemigo code in this repository. Dependencies retain their
 
 Call `filemigo_show_diagram` in a local MCP Apps-compatible host for an interactive preview. It includes text editing, undo/redo, zoom, automatic layout, JSON/editable SVG/draw.io downloads and Open in Filemigo. Changes in the preview are independent of the paired live canvas. Hosts without MCP Apps receive structured JSON. This package does not provide a hosted remote HTTP endpoint or a store listing.
 
-Use `filemigo_preview_changes` for a non-mutating patch preview with added/modified/removed counts and semantic differences. The browser's `filemigo_canvas_propose` tool displays a proposal that the user may apply or dismiss. It expires after ten minutes; any intervening canvas edit invalidates it.
+Use `filemigo_preview_changes` for a non-mutating patch preview with added/modified/removed counts and semantic differences. Live writes use the current desktop revision. Read again after a manual change, conflict or timeout.
 
 `filemigo_import_diagram` reads draw.io XML (plain or compressed, one selected page) or Filemigo editable SVG. Imports preserve supported IDs, labels, endpoints, markers and multiplicities. Limits: 1 MB source/decompressed XML, 150 objects, 200 connectors. Multiple layers, nested groups, hidden content, rotated objects, unsupported shapes/markers and sequence scopes are rejected. HTML formatting is flattened with a warning; manual waypoints may be rerouted. This is not complete draw.io compatibility.
 

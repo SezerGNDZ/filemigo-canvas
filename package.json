@@ -1,6 +1,6 @@
 {
   "name": "filemigo-canvas",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Filemigo diagram toolkit and local MCP server",
   "type": "module",
   "license": "MIT",
@@ -19,12 +19,16 @@
     "docs",
     "README.md",
     "LICENSE",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "desktop"
   ],
   "scripts": {
     "start": "node src/mcp.mjs",
     "test": "node --test tests/*.test.mjs",
-    "example": "node examples/render.mjs"
+    "example": "node examples/render.mjs",
+    "desktop": "electron .",
+    "desktop:prepare": "node desktop/prepare.mjs",
+    "desktop:package": "node desktop/package.mjs"
   },
   "repository": {
     "type": "git",
@@ -44,5 +48,10 @@
       "name": "SezerGNDZ",
       "url": "https://github.com/SezerGNDZ"
     }
-  ]
+  ],
+  "devDependencies": {
+    "@electron/packager": "20.3.0",
+    "electron": "44.7.0"
+  },
+  "main": "desktop/main.mjs"
 }

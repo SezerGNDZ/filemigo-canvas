@@ -1,3 +1,11 @@
+# 0.4.0
+
+- Portable Windows desktop canvas with offline bundled assets and native Open/Save/Save As.
+- Live MCP moved from browser pairing to an authenticated desktop named pipe; bundled runtime requires no external Node.js.
+- AI access starts disabled; revision conflicts, locks, pause, acknowledgement and undo protect manual edits.
+- Website retains its independent canvas and links to desktop downloads.
+- First build is unsigned Windows x64; no automatic updater or macOS/Linux binaries.
+
 # 0.3.0
 
 - Interactive MCP App resource and show/import/preview tools (18 tools total).

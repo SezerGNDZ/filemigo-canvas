@@ -9,7 +9,7 @@ import {routePlan,refreshRoutes} from './core/canvas-geometry.mjs';
 import {importDrawio,exportDrawio,readEditableSvg} from './drawio.mjs';
 import {escapeXML} from './core/studio-core.mjs';
 
-export const version='0.3.0';
+export const version='0.4.0';
 export {importDrawio,exportDrawio,readEditableSvg};
 export function importDiagram(source,{format='drawio',page=0}={}){if(format==='drawio')return importDrawio(source,{page});if(format==='editable-svg')return readEditableSvg(source);throw Error('Supported imports: drawio, editable-svg.');}
 export {systemPrompt,exampleDiagram};

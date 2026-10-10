@@ -2,3 +2,5 @@ node_modules/
 *.tgz
 order.svg
 order.filemigo.json
+
+out/
