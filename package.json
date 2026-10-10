@@ -1,0 +1,39 @@
+{
+  "name": "filemigo-canvas",
+  "version": "0.1.0",
+  "description": "Filemigo diagram toolkit and local MCP server",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "bin": {
+    "filemigo-mcp": "./src/mcp.mjs"
+  },
+  "files": [
+    "src",
+    "examples",
+    "docs",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "start": "node src/mcp.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "example": "node examples/render.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SezerGNDZ/filemigo-canvas.git"
+  },
+  "homepage": "https://filemigo.com/developers/",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.1",
+    "filemigo": "file:../..",
+    "zod": "4.6.5"
+  }
+}

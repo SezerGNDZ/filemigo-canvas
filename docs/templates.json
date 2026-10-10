@@ -1,0 +1,82 @@
+[
+  {
+    "id": "project-flow",
+    "kind": "flowchart",
+    "title": "Project workflow"
+  },
+  {
+    "id": "study-flow",
+    "kind": "flowchart",
+    "title": "Study session"
+  },
+  {
+    "id": "order-flow",
+    "kind": "flowchart",
+    "title": "Order processing"
+  },
+  {
+    "id": "bug-flow",
+    "kind": "flowchart",
+    "title": "Bug triage"
+  },
+  {
+    "id": "library-class",
+    "kind": "uml-class",
+    "title": "Library system"
+  },
+  {
+    "id": "shop-class",
+    "kind": "uml-class",
+    "title": "Online shop"
+  },
+  {
+    "id": "school-class",
+    "kind": "uml-class",
+    "title": "Course enrollment"
+  },
+  {
+    "id": "shapes-class",
+    "kind": "uml-class",
+    "title": "Inheritance basics"
+  },
+  {
+    "id": "login-sequence",
+    "kind": "sequence-diagram",
+    "title": "User sign-in"
+  },
+  {
+    "id": "checkout-sequence",
+    "kind": "sequence-diagram",
+    "title": "Checkout"
+  },
+  {
+    "id": "api-sequence",
+    "kind": "sequence-diagram",
+    "title": "API request"
+  },
+  {
+    "id": "booking-sequence",
+    "kind": "sequence-diagram",
+    "title": "Room reservation"
+  },
+  {
+    "id": "library-er",
+    "kind": "er-diagram",
+    "title": "Library database"
+  },
+  {
+    "id": "shop-er",
+    "kind": "er-diagram",
+    "title": "Orders database"
+  },
+  {
+    "id": "school-er",
+    "kind": "er-diagram",
+    "title": "Student records"
+  },
+  {
+    "id": "blog-er",
+    "kind": "er-diagram",
+    "title": "Publishing database"
+  }
+]

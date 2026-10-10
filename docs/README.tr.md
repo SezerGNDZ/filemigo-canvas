@@ -1,0 +1,22 @@
+# Filemigo Canvas — Türkçe
+
+54 vektörel şekil, 16 diyagram şablonu, JavaScript diyagram kütüphanesi ve 10 araçlı yerel MCP sunucusu. Sürüm: **0.1.0**.
+
+## Kurulum
+
+Node.js 22 veya üstünü kur. GitHub'da **Code → Download ZIP** ile indirip klasöre çıkar veya:
+
+```sh
+git clone https://github.com/SezerGNDZ/filemigo-canvas.git
+cd filemigo-canvas
+npm ci --ignore-scripts
+npm test
+```
+
+MCP destekleyen yapay zekâ uygulamasında yerel stdio sunucusu ekle. Komut `node`, argüman ise `src/mcp.mjs` dosyasının tam yolu olmalı. Örnek: `C:/Projects/filemigo-canvas/src/mcp.mjs`. Tam JSON ayarı [ana README](../README.md) içinde. Uygulamaya göre ayar alanları değişebilir. Yalnızca uzak HTTP sunucusu destekleyen istemciler bu yerel pakete doğrudan bağlanamaz.
+
+“Filemigo ile stok kontrolü ve açık Evet/Hayır dalları içeren bir sipariş akışı oluştur; doğrula, SVG ve proje JSON'u üret” diye iste. Sunucu çıktı metni döndürür; dosyayı kaydetmek yapay zekâ uygulamasının dosya araçlarına aittir. Proje JSON'unu [Filemigo tuvalindeki](https://filemigo.com/tr/canvas/) **Aç** düğmesiyle açabilirsin.
+
+Bu paket diyagram motorudur; sürükle bırak editörünü paketlemez ve açık tarayıcıyı kontrol etmez. `.drawio` içe aktarma yoktur. İlk kurulum npm bağımlılıklarını indirir; çalışma sırasında paketin kendisi ağ isteği veya model çağrısı yapmaz. Kullandığın LLM'nin aboneliği ve veri işleme koşulları ayrıdır.
+
+150 nesne, 200 bağlantı, 1.000.000 girdi karakteri. MCP işlem süresi sınırı 10 saniye. Geçerli yapı, doğru iş mantığı garantisi değildir. İlişkileri ve uyarıları kontrol et. Orijinal Filemigo kaynak kodu MIT lisanslıdır.

@@ -1,0 +1,272 @@
+[
+  {
+    "id": "rect",
+    "category": "basic",
+    "label": "Rectangle"
+  },
+  {
+    "id": "rounded",
+    "category": "basic",
+    "label": "Rounded rectangle"
+  },
+  {
+    "id": "ellipse",
+    "category": "basic",
+    "label": "Ellipse"
+  },
+  {
+    "id": "text",
+    "category": "basic",
+    "label": "Text"
+  },
+  {
+    "id": "note",
+    "category": "basic",
+    "label": "Sticky note"
+  },
+  {
+    "id": "diamond",
+    "category": "flow",
+    "label": "Decision"
+  },
+  {
+    "id": "terminator",
+    "category": "flow",
+    "label": "Start / end"
+  },
+  {
+    "id": "document",
+    "category": "flow",
+    "label": "Document"
+  },
+  {
+    "id": "subprocess",
+    "category": "flow",
+    "label": "Subprocess"
+  },
+  {
+    "id": "hexagon",
+    "category": "flow",
+    "label": "Preparation"
+  },
+  {
+    "id": "card",
+    "category": "systems",
+    "label": "UML / ER card"
+  },
+  {
+    "id": "actor",
+    "category": "systems",
+    "label": "Actor"
+  },
+  {
+    "id": "database",
+    "category": "systems",
+    "label": "Database"
+  },
+  {
+    "id": "package",
+    "category": "systems",
+    "label": "Package"
+  },
+  {
+    "id": "triangle",
+    "category": "basic",
+    "label": "Triangle"
+  },
+  {
+    "id": "pentagon",
+    "category": "basic",
+    "label": "Pentagon"
+  },
+  {
+    "id": "octagon",
+    "category": "basic",
+    "label": "Octagon"
+  },
+  {
+    "id": "star",
+    "category": "basic",
+    "label": "Star"
+  },
+  {
+    "id": "cross",
+    "category": "basic",
+    "label": "Cross"
+  },
+  {
+    "id": "data",
+    "category": "flow",
+    "label": "Input / output"
+  },
+  {
+    "id": "manual-input",
+    "category": "flow",
+    "label": "Manual input"
+  },
+  {
+    "id": "manual-operation",
+    "category": "flow",
+    "label": "Manual operation"
+  },
+  {
+    "id": "delay",
+    "category": "flow",
+    "label": "Delay"
+  },
+  {
+    "id": "stored-data",
+    "category": "flow",
+    "label": "Stored data"
+  },
+  {
+    "id": "multidocument",
+    "category": "flow",
+    "label": "Multiple documents"
+  },
+  {
+    "id": "offpage",
+    "category": "flow",
+    "label": "Off-page connector"
+  },
+  {
+    "id": "merge",
+    "category": "flow",
+    "label": "Merge"
+  },
+  {
+    "id": "extract",
+    "category": "flow",
+    "label": "Extract"
+  },
+  {
+    "id": "component",
+    "category": "systems",
+    "label": "Component"
+  },
+  {
+    "id": "interface",
+    "category": "systems",
+    "label": "Interface"
+  },
+  {
+    "id": "entity",
+    "category": "systems",
+    "label": "Entity"
+  },
+  {
+    "id": "uml-object",
+    "category": "systems",
+    "label": "Object instance"
+  },
+  {
+    "id": "uml-state",
+    "category": "systems",
+    "label": "State"
+  },
+  {
+    "id": "initial-state",
+    "category": "systems",
+    "label": "Initial state"
+  },
+  {
+    "id": "final-state",
+    "category": "systems",
+    "label": "Final state"
+  },
+  {
+    "id": "join",
+    "category": "systems",
+    "label": "Fork / join bar"
+  },
+  {
+    "id": "server",
+    "category": "network",
+    "label": "Server"
+  },
+  {
+    "id": "rack",
+    "category": "network",
+    "label": "Server rack"
+  },
+  {
+    "id": "desktop",
+    "category": "network",
+    "label": "Desktop"
+  },
+  {
+    "id": "laptop",
+    "category": "network",
+    "label": "Laptop"
+  },
+  {
+    "id": "mobile",
+    "category": "network",
+    "label": "Mobile device"
+  },
+  {
+    "id": "router",
+    "category": "network",
+    "label": "Router"
+  },
+  {
+    "id": "switch",
+    "category": "network",
+    "label": "Network switch"
+  },
+  {
+    "id": "firewall",
+    "category": "network",
+    "label": "Firewall"
+  },
+  {
+    "id": "cloud",
+    "category": "network",
+    "label": "Cloud"
+  },
+  {
+    "id": "storage",
+    "category": "network",
+    "label": "Storage"
+  },
+  {
+    "id": "queue",
+    "category": "network",
+    "label": "Message queue"
+  },
+  {
+    "id": "service",
+    "category": "network",
+    "label": "Service / API"
+  },
+  {
+    "id": "arrow-right",
+    "category": "arrows",
+    "label": "Right arrow"
+  },
+  {
+    "id": "arrow-left",
+    "category": "arrows",
+    "label": "Left arrow"
+  },
+  {
+    "id": "arrow-up",
+    "category": "arrows",
+    "label": "Up arrow"
+  },
+  {
+    "id": "arrow-down",
+    "category": "arrows",
+    "label": "Down arrow"
+  },
+  {
+    "id": "arrow-both",
+    "category": "arrows",
+    "label": "Two-way arrow"
+  },
+  {
+    "id": "chevron",
+    "category": "arrows",
+    "label": "Chevron"
+  }
+]
